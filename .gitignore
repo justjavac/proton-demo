@@ -1,0 +1,30 @@
+# MoonBit build output
+_build/
+.mooncakes/
+.mooncakes.lock
+.repos/
+
+# Proton / CEF local runtime and tools
+.cef-cache/
+target/
+
+# Local diagnostics and temporary files
+RUN_REPORT.md
+trace.json
+*.log
+*.tmp
+*.temp
+*.core
+*.pdb
+*.ilk
+*.obj
+*.lib
+*.exp
+*.exe
+
+# Windows / editor noise
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+.idea/

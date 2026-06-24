@@ -1,0 +1,19 @@
+* text=auto
+
+*.md text eol=lf
+*.mbt text eol=lf
+*.moon text eol=lf
+*.pkg text eol=lf
+*.mod text eol=lf
+*.json text eol=lf
+*.html text eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.dll binary
+*.exe binary
+*.lib binary
+*.pdb binary

@@ -6,8 +6,8 @@ import {
   "moonbitlang/x@0.4.43",
   "justjavac/ffi@0.2.1",
   "moonbitlang/async@0.19.0",
-  "justjavac/proton_ext@0.1.6",
-  "justjavac/proton@0.1.5",
+  "justjavac/proton_ext@0.1.7",
+  "justjavac/proton@0.1.6",
 }
 
 readme = "README.md"

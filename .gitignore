@@ -6,7 +6,6 @@ _build/
 
 # Proton / CEF local runtime and tools
 .proton/
-target/
 
 # Local diagnostics and temporary files
 RUN_REPORT.md

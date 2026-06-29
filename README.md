@@ -1,18 +1,18 @@
 ﻿# Proton Starter
 
-一个最小 Proton 桌面应用示例。示例使用 `justjavac/proton` 加载内嵌 HTML，不依赖本地
-`moonbit-webview` 仓库，也不使用额外 native 扩展。
+一个最小 Proton 桌面应用示例。
 
 ## 要求
 
 - Windows、macOS 或 Linux
 - MoonBit
 - PowerShell、sh 或 bash
+- MoonBit bin 目录已加入 `PATH`
 
 ## 当前版本
 
 - `justjavac/proton@0.1.6`
-- `proton_cli@0.1.4`
+- `justjavac/proton_cli@0.1.4`
 
 ## 运行本示例
 
@@ -20,8 +20,8 @@ Windows PowerShell：
 
 ```powershell
 moon update
-moon install justjavac/proton_cli --bin target/proton-tools
-target\proton-tools\proton_cli.exe cef setup
+moon install justjavac/proton_cli
+proton_cli cef setup
 
 moon check --target native
 moon build app --target native
@@ -37,8 +37,8 @@ macOS / Linux：
 
 ```sh
 moon update
-moon install justjavac/proton_cli --bin target/proton-tools
-./target/proton-tools/proton_cli cef setup
+moon install justjavac/proton_cli
+proton_cli cef setup
 
 moon check --target native
 moon build app --target native
@@ -121,7 +121,6 @@ _build/
 .mooncakes/
 .mooncakes.lock
 .proton/
-target/
 ```
 
 ## 清理
@@ -130,14 +129,14 @@ PowerShell：
 
 ```powershell
 moon clean
-Remove-Item -Recurse -Force .proton, .mooncakes, target
+Remove-Item -Recurse -Force .proton, .mooncakes
 ```
 
 sh / bash：
 
 ```sh
 moon clean
-rm -rf .proton .mooncakes target
+rm -rf .proton .mooncakes
 ```
 
 ## 不提交
@@ -147,7 +146,6 @@ rm -rf .proton .mooncakes target
 - `.proton/`
 - `.mooncakes/`
 - `_build/`
-- `target/`
 
 ## License
 

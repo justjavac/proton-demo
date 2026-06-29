@@ -118,6 +118,7 @@ let resource : String =
   #|            .panel {
   #|                padding: 16px;
   #|                display: grid;
+  #|                align-content: start;
   #|                gap: 14px;
   #|            }
   #|
@@ -145,7 +146,14 @@ let resource : String =
   #|            .row {
   #|                display: grid;
   #|                grid-template-columns: minmax(0, 1fr) auto;
+  #|                align-items: center;
+  #|                align-self: start;
   #|                gap: 8px;
+  #|            }
+  #|
+  #|            .row input,
+  #|            .row button {
+  #|                height: 40px;
   #|            }
   #|
   #|            input {
@@ -184,6 +192,26 @@ let resource : String =
   #|                background: transparent;
   #|                color: var(--danger);
   #|                border-color: var(--line);
+  #|            }
+  #|
+  #|            button:disabled {
+  #|                cursor: wait;
+  #|                opacity: 0.64;
+  #|            }
+  #|
+  #|            .add-form {
+  #|                display: grid;
+  #|                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  #|                gap: 8px;
+  #|                align-items: center;
+  #|            }
+  #|
+  #|            .extension-result {
+  #|                min-height: 20px;
+  #|                color: var(--muted);
+  #|                font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  #|                font-size: 13px;
+  #|                line-height: 1.3;
   #|            }
   #|
   #|            .tasks {
@@ -256,6 +284,10 @@ let resource : String =
   #|                .stats {
   #|                    grid-template-columns: 1fr;
   #|                }
+  #|
+  #|                .add-form {
+  #|                    grid-template-columns: 1fr;
+  #|                }
   #|            }
   #|        </style>
   #|    </head>
@@ -303,6 +335,15 @@ let resource : String =
   #|                        <span class="muted">Clock</span>
   #|                        <strong id="clock">--:--:--</strong>
   #|                    </div>
+  #|                    <div class="stat">
+  #|                        <span class="muted">Native Add</span>
+  #|                        <form class="add-form" id="addForm">
+  #|                            <input id="addLeft" type="number" value="2" aria-label="Left" />
+  #|                            <input id="addRight" type="number" value="3" aria-label="Right" />
+  #|                            <button id="addRun">Add</button>
+  #|                        </form>
+  #|                        <output class="extension-result" id="addResult">Ready</output>
+  #|                    </div>
   #|                    <div class="log" id="log"></div>
   #|                </aside>
   #|            </section>
@@ -327,6 +368,10 @@ let resource : String =
   #|                log: document.getElementById("log"),
   #|                tasks: document.getElementById("tasks"),
   #|                taskInput: document.getElementById("taskInput"),
+  #|                addLeft: document.getElementById("addLeft"),
+  #|                addRight: document.getElementById("addRight"),
+  #|                addRun: document.getElementById("addRun"),
+  #|                addResult: document.getElementById("addResult"),
   #|            };
   #|
   #|            function addLog(message) {
@@ -424,6 +469,29 @@ let resource : String =
   #|                elements.taskInput.value = "";
   #|                addLog("Added: " + title);
   #|                render();
+  #|            });
+  #|
+  #|            document.getElementById("addForm").addEventListener("submit", async (event) => {
+  #|                event.preventDefault();
+  #|                const payload = {
+  #|                    left: Number(elements.addLeft.value || "0"),
+  #|                    right: Number(elements.addRight.value || "0"),
+  #|                };
+  #|
+  #|                elements.addRun.disabled = true;
+  #|                elements.addResult.textContent = "Waiting...";
+  #|
+  #|                try {
+  #|                    const total = await window.__MoonBit__.add.slowAdd(payload);
+  #|                    elements.addResult.textContent =
+  #|                        `${payload.left} + ${payload.right} = ${total}`;
+  #|                    addLog("Native add " + total);
+  #|                } catch (error) {
+  #|                    elements.addResult.textContent = String(error);
+  #|                    addLog("Native add failed");
+  #|                } finally {
+  #|                    elements.addRun.disabled = false;
+  #|                }
   #|            });
   #|
   #|            function updateClock() {

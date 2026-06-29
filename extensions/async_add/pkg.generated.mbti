@@ -1,0 +1,20 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "justjavac/proton_demo/extensions/async_add"
+
+import {
+  "justjavac/proton/extension",
+  "moonbitlang/core/json",
+}
+
+// Values
+pub fn extension() -> @extension.Extension
+
+// Errors
+
+// Types and methods
+type ProtonSlowAddPayload derive(@json.FromJson)
+
+// Type aliases
+
+// Traits
+

@@ -19,6 +19,8 @@ description = "Standalone Proton starter app demo."
 
 rule(name: "embed", command: ":embed -i $input -o $output")
 
+rule(name: "proton_codegen", command: "proton_cli codegen $input -o $output")
+
 options(
   source: "",
   warn_list: "",

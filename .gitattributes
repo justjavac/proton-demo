@@ -1,7 +1,10 @@
 * text=auto
 
+.gitattributes text eol=lf
 *.md text eol=lf
 *.mbt text eol=lf
+*.mbti text eol=lf
+*.ext text eol=lf
 *.moon text eol=lf
 *.pkg text eol=lf
 *.mod text eol=lf

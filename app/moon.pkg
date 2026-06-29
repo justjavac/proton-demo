@@ -1,6 +1,7 @@
 import {
   "moonbitlang/async",
   "justjavac/proton",
+  "justjavac/proton_demo/extensions/async_add",
 }
 
 supported_targets = "native"

@@ -5,6 +5,7 @@ _build/
 .repos/
 
 # Proton / CEF local runtime and tools
+.proton/
 .cef-cache/
 target/
 

@@ -2,50 +2,35 @@
 
 一个最小 Proton 桌面应用示例。
 
-## 要求
+## 设置
 
-- Windows、macOS 或 Linux
-- MoonBit
-- PowerShell、sh 或 bash
-- MoonBit bin 目录已加入 `PATH`
+```bash
+moon update
+moon install justjavac/proton_cli
+proton_cli cef setup
 
-## 当前版本
-
-- `justjavac/proton@0.1.6`
-- `justjavac/proton_cli@0.1.4`
+moon check --target native
+moon build app --target native
+```
 
 ## 运行本示例
 
 Windows PowerShell：
 
 ```powershell
-moon update
-moon install justjavac/proton_cli
-proton_cli cef setup
-
-moon check --target native
-moon build app --target native
-
 $root = (Get-Location).Path
 $runtime = Get-Content .proton\runtime.json | ConvertFrom-Json
 $runtimeBin = Join-Path $root (Join-Path $runtime.dist "bin")
 $env:PATH = "$runtimeBin$([IO.Path]::PathSeparator)$env:PATH"
-.\_build\native\debug\build\app\app.exe
+moon run app --target native
 ```
 
 macOS / Linux：
 
 ```sh
-moon update
-moon install justjavac/proton_cli
-proton_cli cef setup
-
-moon check --target native
-moon build app --target native
-
 runtime_bin="$(find .proton/runtimes -type d -name bin -print -quit)"
 export PATH="$(pwd)/$runtime_bin:$PATH"
-./_build/native/debug/build/app/app
+moon run app --target native
 ```
 
 ## 从零创建
@@ -107,45 +92,6 @@ async fn main {
 ```
 
 创建 `app/app.html`，写普通 HTML、CSS 和 JavaScript。构建时会生成 `app/app.mbt`：
-
-```sh
-moon build app --target native
-```
-
-准备 runtime 后，按上面的对应平台命令把 runtime `bin` 加入 `PATH`，再启动生成的可执行文件。
-
-建议添加 `.gitignore`：
-
-```gitignore
-_build/
-.mooncakes/
-.mooncakes.lock
-.proton/
-```
-
-## 清理
-
-PowerShell：
-
-```powershell
-moon clean
-Remove-Item -Recurse -Force .proton, .mooncakes
-```
-
-sh / bash：
-
-```sh
-moon clean
-rm -rf .proton .mooncakes
-```
-
-## 不提交
-
-这些目录和文件可以重新生成：
-
-- `.proton/`
-- `.mooncakes/`
-- `_build/`
 
 ## License
 

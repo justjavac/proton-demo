@@ -6,7 +6,6 @@ _build/
 
 # Proton / CEF local runtime and tools
 .proton/
-.cef-cache/
 target/
 
 # Local diagnostics and temporary files

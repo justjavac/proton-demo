@@ -1,495 +1,435 @@
-<html>
+<!doctype html>
+<html lang="en">
     <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <style>
             :root {
-                color-scheme: light dark;
-                --bg-splash: #f6d8a8;
-                --bg-start: #d9ebe4;
-                --bg-end: #f7f2e7;
-                --ink: #16313b;
-                --muted: #607881;
-                --shell: rgba(255, 255, 255, 0.9);
-                --shell-line: rgba(255, 255, 255, 0.7);
-                --panel: #eef4f6;
-                --panel-line: rgba(22, 49, 59, 0.12);
-                --field: rgba(255, 255, 255, 0.94);
-                --surface: #ffffff;
-                --code-chip: #d8efec;
-                --button: #16313b;
-                --button-alt: #0b7680;
-                --button-ghost: #ffffff;
-                --button-ghost-text: #16313b;
-                --button-warn: #a04634;
-                --notice-ok: #ddf2ef;
-                --notice-error: #f9dfdb;
-                --shadow: rgba(22, 49, 59, 0.16);
+                color-scheme: light;
+                --bg: #f5f7f8;
+                --panel: #ffffff;
+                --panel-alt: #eef3f2;
+                --line: #d8e0e3;
+                --ink: #1f2933;
+                --muted: #63717a;
+                --accent: #087f7a;
+                --accent-ink: #ffffff;
+                --warm: #b45309;
+                --danger: #b42318;
+                --shadow: rgba(31, 41, 51, 0.1);
             }
 
-            @media (prefers-color-scheme: dark) {
-                :root {
-                    --bg-splash: rgba(52, 211, 153, 0.28);
-                    --bg-start: #0f1820;
-                    --bg-end: #161d27;
-                    --ink: #edf3f8;
-                    --muted: #9eb2bd;
-                    --shell: rgba(16, 24, 31, 0.9);
-                    --shell-line: rgba(237, 243, 248, 0.08);
-                    --panel: #111b24;
-                    --panel-line: rgba(237, 243, 248, 0.1);
-                    --field: #0f1820;
-                    --surface: #0c141b;
-                    --code-chip: #12303a;
-                    --button: #34d399;
-                    --button-alt: #22c1b4;
-                    --button-ghost: #16212b;
-                    --button-ghost-text: #edf3f8;
-                    --button-warn: #f87171;
-                    --notice-ok: #0f2a29;
-                    --notice-error: #351918;
-                    --shadow: rgba(0, 0, 0, 0.42);
-                }
+            [data-theme="dark"] {
+                color-scheme: dark;
+                --bg: #101417;
+                --panel: #171d21;
+                --panel-alt: #1f292e;
+                --line: #344149;
+                --ink: #edf2f4;
+                --muted: #a7b4bb;
+                --accent: #2dd4bf;
+                --accent-ink: #071011;
+                --warm: #f59e0b;
+                --danger: #fb7185;
+                --shadow: rgba(0, 0, 0, 0.32);
+            }
+
+            * {
+                box-sizing: border-box;
             }
 
             body {
                 margin: 0;
                 min-height: 100vh;
-                background:
-                    radial-gradient(circle at top right, var(--bg-splash) 0%, transparent 38%),
-                    linear-gradient(150deg, var(--bg-start) 0%, var(--bg-end) 100%);
+                background: var(--bg);
                 color: var(--ink);
-                font-family: "Avenir Next", "Trebuchet MS", sans-serif;
+                font-family:
+                    Inter, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont,
+                    sans-serif;
             }
-            .shell {
-                width: min(70rem, calc(100vw - 2rem));
-                margin: 1rem auto;
-                padding: 1.25rem;
-                border-radius: 28px;
-                background: var(--shell);
-                border: 1px solid var(--shell-line);
-                box-shadow: 0 26px 90px var(--shadow);
+
+            button,
+            input {
+                font: inherit;
             }
+
+            .app {
+                width: min(960px, calc(100vw - 32px));
+                margin: 24px auto;
+                display: grid;
+                gap: 16px;
+            }
+
+            .topbar,
+            .panel,
+            .task {
+                border: 1px solid var(--line);
+                border-radius: 8px;
+                background: var(--panel);
+                box-shadow: 0 12px 28px var(--shadow);
+            }
+
+            .topbar {
+                min-height: 80px;
+                padding: 18px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 16px;
+            }
+
             h1,
             h2,
             p {
                 margin: 0;
             }
-            .hero,
-            .panel,
-            .stack,
-            .form {
-                display: grid;
-                gap: 0.85rem;
+
+            h1 {
+                font-size: 24px;
+                line-height: 1.2;
             }
-            .hero {
-                margin-bottom: 1rem;
+
+            h2 {
+                font-size: 16px;
+                line-height: 1.2;
             }
-            .hero p {
-                color: var(--muted);
-                max-width: 48rem;
-            }
-            code {
-                padding: 0.16rem 0.42rem;
-                border-radius: 999px;
-                background: var(--code-chip);
-            }
-            .layout {
-                display: grid;
-                grid-template-columns: minmax(0, 1.3fr) minmax(18rem, 0.95fr);
-                gap: 1rem;
-            }
-            .panel {
-                padding: 1rem;
-                border-radius: 22px;
-                background: var(--panel);
-                border: 1px solid var(--panel-line);
-            }
-            label {
-                display: grid;
-                gap: 0.35rem;
-                font-size: 0.95rem;
-                font-weight: 600;
-            }
-            input,
-            textarea,
-            button {
-                font: inherit;
-            }
-            input,
-            textarea {
-                width: 100%;
-                box-sizing: border-box;
-                border: 1px solid var(--panel-line);
-                border-radius: 14px;
-                background: var(--field);
-                color: var(--ink);
-                padding: 0.82rem 0.95rem;
-            }
-            textarea {
-                min-height: 15rem;
-                resize: vertical;
-                line-height: 1.48;
-            }
-            .actions {
-                display: grid;
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 0.75rem;
-            }
-            button {
-                border: 0;
-                border-radius: 999px;
-                padding: 0.82rem 1rem;
-                background: var(--button);
-                color: white;
-                font-weight: 600;
-                cursor: pointer;
-            }
-            button.alt {
-                background: var(--button-alt);
-            }
-            button.ghost {
-                background: var(--button-ghost);
-                color: var(--button-ghost-text);
-                border: 1px solid var(--panel-line);
-            }
-            button.warn {
-                background: var(--button-warn);
-            }
-            button:disabled {
-                opacity: 0.65;
-                cursor: progress;
-            }
-            .notice,
-            .meta {
-                border-radius: 16px;
-                padding: 0.82rem 0.95rem;
-                background: var(--surface);
-                border: 1px solid var(--panel-line);
-            }
-            .notice.error {
-                background: var(--notice-error);
-            }
-            .notice.ok {
-                background: var(--notice-ok);
-            }
+
             .muted {
                 color: var(--muted);
             }
-            .list {
+
+            .toolbar {
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+
+            .grid {
                 display: grid;
-                gap: 0.55rem;
-                margin: 0;
-                padding: 0;
-                list-style: none;
-                max-height: 18rem;
-                overflow: auto;
+                grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+                gap: 16px;
             }
-            .list li {
-                border-radius: 14px;
-                background: var(--surface);
-                border: 1px solid var(--panel-line);
-                padding: 0.72rem 0.82rem;
-                font-family: "SF Mono", "Menlo", monospace;
-                font-size: 0.88rem;
+
+            .panel {
+                padding: 16px;
+                display: grid;
+                gap: 14px;
             }
-            .meta strong {
-                display: block;
-                margin-bottom: 0.28rem;
+
+            .stats {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .stat {
+                min-height: 82px;
+                padding: 12px;
+                border: 1px solid var(--line);
+                border-radius: 8px;
+                background: var(--panel-alt);
+                display: grid;
+                align-content: space-between;
+            }
+
+            .stat strong {
+                font-size: 24px;
+                line-height: 1;
+            }
+
+            .row {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto;
+                gap: 8px;
+            }
+
+            input {
+                width: 100%;
+                min-height: 40px;
+                border: 1px solid var(--line);
+                border-radius: 8px;
+                background: var(--panel);
+                color: var(--ink);
+                padding: 0 12px;
+            }
+
+            button {
+                min-height: 40px;
+                border: 1px solid transparent;
+                border-radius: 8px;
+                padding: 0 14px;
+                background: var(--accent);
+                color: var(--accent-ink);
+                cursor: pointer;
+                font-weight: 600;
+            }
+
+            button.secondary {
+                background: var(--panel-alt);
+                color: var(--ink);
+                border-color: var(--line);
+            }
+
+            button.warm {
+                background: var(--warm);
+                color: #ffffff;
+            }
+
+            button.danger {
+                background: transparent;
+                color: var(--danger);
+                border-color: var(--line);
+            }
+
+            .tasks {
+                display: grid;
+                gap: 8px;
+                min-height: 216px;
+                align-content: start;
+            }
+
+            .task {
+                min-height: 52px;
+                padding: 10px;
+                display: grid;
+                grid-template-columns: auto minmax(0, 1fr) auto;
+                align-items: center;
+                gap: 10px;
+                box-shadow: none;
+            }
+
+            .task input {
+                width: 18px;
+                min-height: 18px;
+                accent-color: var(--accent);
+            }
+
+            .task.done span {
                 color: var(--muted);
-                font-size: 0.78rem;
-                text-transform: uppercase;
+                text-decoration: line-through;
             }
-            @media (max-width: 860px) {
-                .layout,
-                .actions {
+
+            .empty {
+                min-height: 216px;
+                border: 1px dashed var(--line);
+                border-radius: 8px;
+                display: grid;
+                place-items: center;
+                color: var(--muted);
+            }
+
+            .log {
+                min-height: 168px;
+                max-height: 168px;
+                overflow: auto;
+                border: 1px solid var(--line);
+                border-radius: 8px;
+                background: var(--panel-alt);
+                padding: 10px;
+                display: grid;
+                align-content: start;
+                gap: 6px;
+                font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+                font-size: 12px;
+            }
+
+            .log div {
+                white-space: nowrap;
+            }
+
+            @media (max-width: 760px) {
+                .topbar {
+                    align-items: flex-start;
+                    flex-direction: column;
+                }
+
+                .toolbar {
+                    justify-content: flex-start;
+                }
+
+                .grid,
+                .stats {
                     grid-template-columns: 1fr;
                 }
             }
         </style>
     </head>
     <body>
-        <div class="shell">
-            <div class="hero">
-                <h1>__MoonBit__ App Runtime + FS + Path</h1>
-                <p>
-                    This example runs through <code>App</code> and uses the
-                    runtime bridge exposed on <code>window.__MoonBit__</code>.
-                    It demonstrates the generated proxies
-                    <code>__MoonBit__.fs</code> and
-                    <code>__MoonBit__.path</code>, with the filesystem flow
-                    leaning on Node-style calls such as
-                    <code>readFile(path)</code>,
-                    <code>writeFile(path, content)</code>,
-                    <code>stat(path)</code>, and
-                    <code>readdir(path)</code>.
-                </p>
-            </div>
-            <div class="layout">
-                <div class="stack">
-                    <div class="panel">
-                        <h2>Editor</h2>
-                        <div class="form">
-                            <label>
-                                File path
-                                <input id="path" value="moonbit-app-runtime-demo.txt" />
-                            </label>
-                            <label>
-                                Content
-                                <textarea id="content">Hello from the __MoonBit__ App runtime.
+        <main class="app">
+            <header class="topbar">
+                <div>
+                    <h1>Proton Starter</h1>
+                    <p class="muted" id="subtitle">Native window ready</p>
+                </div>
+                <div class="toolbar">
+                    <button id="tick">Count</button>
+                    <button id="theme" class="secondary">Theme</button>
+                    <button id="reset" class="danger">Reset</button>
+                </div>
+            </header>
 
-This page talks to the native fs extension through window.__MoonBit__.</textarea>
-                            </label>
-                            <div class="actions">
-                                <button id="resolve" class="ghost">Resolve Path</button>
-                                <button id="listDir" class="ghost">List Directory</button>
-                                <button id="save">Save File</button>
-                                <button id="load" class="alt">Load File</button>
-                                <button id="inspect" class="ghost">Inspect File</button>
-                                <button id="remove" class="warn">Delete File</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel">
-                        <h2>Directory</h2>
-                        <p class="muted">Entries next to the active file.</p>
-                        <ul id="dirList" class="list">
-                            <li class="muted">No directory listing yet.</li>
-                        </ul>
-                    </div>
+            <section class="grid">
+                <div class="panel">
+                    <h2>Tasks</h2>
+                    <form class="row" id="taskForm">
+                        <input id="taskInput" placeholder="New task" autocomplete="off" />
+                        <button>Add</button>
+                    </form>
+                    <div id="tasks" class="tasks"></div>
                 </div>
-                <div class="stack">
-                    <div class="panel">
-                        <h2>Status</h2>
-                        <div id="notice" class="notice ok">Runtime is ready.</div>
-                        <div id="resolved" class="meta">
-                            <strong>Resolved Path</strong>
-                            <span>-</span>
+
+                <aside class="panel">
+                    <h2>Session</h2>
+                    <div class="stats">
+                        <div class="stat">
+                            <span class="muted">Clicks</span>
+                            <strong id="count">0</strong>
                         </div>
-                        <div id="pathInfo" class="meta">
-                            <strong>Path View</strong>
-                            <span>-</span>
+                        <div class="stat">
+                            <span class="muted">Tasks</span>
+                            <strong id="taskCount">0</strong>
                         </div>
-                        <div id="stat" class="meta">
-                            <strong>File State</strong>
-                            <span>-</span>
+                        <div class="stat">
+                            <span class="muted">Done</span>
+                            <strong id="doneCount">0</strong>
                         </div>
                     </div>
-                    <div class="panel">
-                        <h2>Extension Activity</h2>
-                        <p class="muted">
-                            Events are wired through <code>__MoonBit__.events.on("fs.activity")</code>.
-                        </p>
-                        <ul id="events" class="list">
-                            <li class="muted">No native events yet.</li>
-                        </ul>
+                    <div class="stat">
+                        <span class="muted">Clock</span>
+                        <strong id="clock">--:--:--</strong>
                     </div>
-                </div>
-            </div>
-        </div>
+                    <div class="log" id="log"></div>
+                </aside>
+            </section>
+        </main>
+
         <script>
-            const app = window.__MoonBit__;
-            const fs = app.fs;
-            const pathApi = app.path;
-            const pathInput = document.getElementById("path");
-            const contentInput = document.getElementById("content");
-            const notice = document.getElementById("notice");
-            const resolved = document.getElementById("resolved").querySelector("span");
-            const pathInfo = document.getElementById("pathInfo").querySelector("span");
-            const stat = document.getElementById("stat").querySelector("span");
-            const dirList = document.getElementById("dirList");
-            const events = document.getElementById("events");
-            const buttons = Array.from(document.querySelectorAll("button"));
+            const state = {
+                count: 0,
+                nextTaskId: 3,
+                theme: "light",
+                tasks: [
+                    { id: 1, title: "Create a Proton window", done: true },
+                    { id: 2, title: "Edit embedded HTML", done: false },
+                ],
+            };
 
-            function setBusy(busy) {
-                buttons.forEach((button) => {
-                    button.disabled = busy;
-                });
+            const elements = {
+                count: document.getElementById("count"),
+                taskCount: document.getElementById("taskCount"),
+                doneCount: document.getElementById("doneCount"),
+                clock: document.getElementById("clock"),
+                log: document.getElementById("log"),
+                tasks: document.getElementById("tasks"),
+                taskInput: document.getElementById("taskInput"),
+            };
+
+            function addLog(message) {
+                const line = document.createElement("div");
+                line.textContent = new Date().toLocaleTimeString() + "  " + message;
+                elements.log.prepend(line);
+                while (elements.log.children.length > 10) {
+                    elements.log.removeChild(elements.log.lastElementChild);
+                }
             }
 
-            function setNotice(message, kind) {
-                notice.textContent = message;
-                notice.className = "notice " + (kind || "ok");
+            function renderStats() {
+                elements.count.textContent = String(state.count);
+                elements.taskCount.textContent = String(state.tasks.length);
+                elements.doneCount.textContent = String(
+                    state.tasks.filter((task) => task.done).length,
+                );
             }
 
-            function renderDir(entries) {
-                dirList.innerHTML = "";
-                if (!entries.length) {
-                    dirList.innerHTML = '<li class="muted">The directory is empty.</li>';
+            function renderTasks() {
+                elements.tasks.innerHTML = "";
+                if (state.tasks.length === 0) {
+                    const empty = document.createElement("div");
+                    empty.className = "empty";
+                    empty.textContent = "No tasks";
+                    elements.tasks.appendChild(empty);
                     return;
                 }
-                entries.forEach((entry) => {
-                    const item = document.createElement("li");
-                    item.textContent = entry;
-                    dirList.appendChild(item);
-                });
+
+                for (const task of state.tasks) {
+                    const item = document.createElement("label");
+                    item.className = "task" + (task.done ? " done" : "");
+
+                    const checkbox = document.createElement("input");
+                    checkbox.type = "checkbox";
+                    checkbox.checked = task.done;
+                    checkbox.addEventListener("change", () => {
+                        task.done = checkbox.checked;
+                        addLog((task.done ? "Done: " : "Open: ") + task.title);
+                        render();
+                    });
+
+                    const title = document.createElement("span");
+                    title.textContent = task.title;
+
+                    const remove = document.createElement("button");
+                    remove.type = "button";
+                    remove.className = "danger";
+                    remove.textContent = "Remove";
+                    remove.addEventListener("click", () => {
+                        state.tasks = state.tasks.filter((item) => item.id !== task.id);
+                        addLog("Removed: " + task.title);
+                        render();
+                    });
+
+                    item.append(checkbox, title, remove);
+                    elements.tasks.appendChild(item);
+                }
             }
 
-            function renderEvent(event) {
-                const item = document.createElement("li");
-                const payload = event.payload || {};
-                const parts = [event.name];
-                if (payload.path) {
-                    parts.push(payload.path);
-                }
-                if (payload.rid != null) {
-                    parts.push("rid " + payload.rid);
-                }
-                if (payload.bytes != null) {
-                    parts.push(payload.bytes + " bytes");
-                }
-                item.textContent = parts.join(" | ");
-                if (events.firstElementChild && events.firstElementChild.className === "muted") {
-                    events.innerHTML = "";
-                }
-                events.prepend(item);
-                while (events.children.length > 8) {
-                    events.removeChild(events.lastElementChild);
-                }
+            function render() {
+                document.documentElement.dataset.theme = state.theme;
+                renderStats();
+                renderTasks();
             }
 
-            async function refreshPathInfo(path) {
-                const [dirname, basename, extname, absolute, normalized] = await Promise.all([
-                    pathApi.dirname(path),
-                    pathApi.basename(path),
-                    pathApi.extname(path),
-                    pathApi.isAbsolute(path),
-                    pathApi.normalize(path),
-                ]);
-                pathInfo.textContent =
-                    "dir " +
-                    dirname +
-                    " | base " +
-                    basename +
-                    " | ext " +
-                    (extname || "(none)") +
-                    " | absolute " +
-                    absolute +
-                    " | normalized " +
-                    normalized;
+            document.getElementById("tick").addEventListener("click", () => {
+                state.count += 1;
+                addLog("Count " + state.count);
+                renderStats();
+            });
+
+            document.getElementById("theme").addEventListener("click", () => {
+                state.theme = state.theme === "light" ? "dark" : "light";
+                addLog("Theme " + state.theme);
+                render();
+            });
+
+            document.getElementById("reset").addEventListener("click", () => {
+                state.count = 0;
+                state.tasks = [];
+                addLog("Reset");
+                render();
+            });
+
+            document.getElementById("taskForm").addEventListener("submit", (event) => {
+                event.preventDefault();
+                const title = elements.taskInput.value.trim();
+                if (!title) {
+                    elements.taskInput.focus();
+                    return;
+                }
+                state.tasks.push({ id: state.nextTaskId, title, done: false });
+                state.nextTaskId += 1;
+                elements.taskInput.value = "";
+                addLog("Added: " + title);
+                render();
+            });
+
+            function updateClock() {
+                elements.clock.textContent = new Date().toLocaleTimeString();
             }
 
-            async function resolveInputPath() {
-                const input = pathInput.value.trim();
-                if (!input) {
-                    throw new Error("Please enter a file path.");
-                }
-                const absolutePath = await pathApi.resolve(input);
-                pathInput.value = absolutePath;
-                resolved.textContent = absolutePath;
-                await refreshPathInfo(absolutePath);
-                return absolutePath;
-            }
-
-            async function inspect(path) {
-                return fs.stat(path, { throwIfNoEntry: false });
-            }
-
-            app.events.on("fs.activity", (event) => {
-                renderEvent(event);
-            });
-
-            document.getElementById("resolve").addEventListener("click", async () => {
-                setBusy(true);
-                try {
-                    await resolveInputPath();
-                    setNotice("Resolved the input path through __MoonBit__.path.resolve().");
-                } catch (error) {
-                    setNotice("Resolve failed: " + String(error), "error");
-                }
-                setBusy(false);
-            });
-
-            document.getElementById("save").addEventListener("click", async () => {
-                setBusy(true);
-                try {
-                    const path = await resolveInputPath();
-                    await fs.writeFile(path, contentInput.value, { flush: true });
-                    const summary = await inspect(path);
-                    stat.textContent = summary.exists
-                        ? "size " + summary.size + ", file " + summary.is_file + ", dir " + summary.is_dir
-                        : "missing";
-                    setNotice("Saved the file through __MoonBit__.fs.writeFile().");
-                } catch (error) {
-                    setNotice("Save failed: " + String(error), "error");
-                }
-                setBusy(false);
-            });
-
-            document.getElementById("load").addEventListener("click", async () => {
-                setBusy(true);
-                try {
-                    const path = await resolveInputPath();
-                    const loaded = {
-                        summary: await inspect(path),
-                        read: await fs.readFile(path),
-                    };
-                    contentInput.value = loaded.read.content;
-                    stat.textContent =
-                        "size " +
-                        loaded.summary.size +
-                        ", file " +
-                        loaded.summary.is_file +
-                        ", dir " +
-                        loaded.summary.is_dir;
-                    setNotice("Loaded the file through __MoonBit__.fs.readFile().");
-                } catch (error) {
-                    setNotice("Load failed: " + String(error), "error");
-                }
-                setBusy(false);
-            });
-
-            document.getElementById("inspect").addEventListener("click", async () => {
-                setBusy(true);
-                try {
-                    const path = await resolveInputPath();
-                    const summary = await inspect(path);
-                    stat.textContent = summary.exists
-                        ? "size " + summary.size + ", file " + summary.is_file + ", dir " + summary.is_dir
-                        : "missing";
-                    setNotice(
-                        summary.exists
-                            ? "Inspected the current file."
-                            : "The file does not exist yet.",
-                        summary.exists ? "ok" : "error",
-                    );
-                } catch (error) {
-                    setNotice("Inspect failed: " + String(error), "error");
-                }
-                setBusy(false);
-            });
-
-            document.getElementById("listDir").addEventListener("click", async () => {
-                setBusy(true);
-                try {
-                    const path = await resolveInputPath();
-                    const dirname = await pathApi.dirname(path);
-                    const entries = await fs.readdir(dirname);
-                    renderDir(entries.entries);
-                    setNotice("Listed the parent directory.");
-                } catch (error) {
-                    setNotice("Directory listing failed: " + String(error), "error");
-                }
-                setBusy(false);
-            });
-
-            document.getElementById("remove").addEventListener("click", async () => {
-                setBusy(true);
-                try {
-                    const path = await resolveInputPath();
-                    const removed = await fs.rm(path, { force: true });
-                    stat.textContent = removed.removed ? "removed" : "already missing";
-                    setNotice(
-                        removed.removed ? "Deleted the file." : "The file was already absent.",
-                        removed.removed ? "ok" : "error",
-                    );
-                } catch (error) {
-                    setNotice("Delete failed: " + String(error), "error");
-                }
-                setBusy(false);
-            });
-
-            resolveInputPath().catch((error) => {
-                setNotice("Initial path analysis failed: " + String(error), "error");
-            });
+            updateClock();
+            setInterval(updateClock, 1000);
+            addLog("Started");
+            render();
         </script>
     </body>
 </html>

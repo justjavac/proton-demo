@@ -52,6 +52,15 @@ jobs:
           moon install justjavac/proton_cli
           proton_cli --help
 
+      - name: Install Proton CLI
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: |
+          for /f "usebackq tokens=*" %%i in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath`) do set "VS_INSTALL=%%i"
+          call "%VS_INSTALL%\Common7\Tools\VsDevCmd.bat" -arch=x64
+          moon install justjavac/proton_cli
+          proton_cli --help
+
       - name: Check
         shell: pwsh
         run: moon check --target native
@@ -82,15 +91,6 @@ jobs:
         continue-on-error: true
         shell: pwsh
         run: moon build app --target native
-
-      - name: Install Proton CLI
-        if: runner.os == 'Windows'
-        shell: cmd
-        run: |
-          for /f "usebackq tokens=*" %%i in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath`) do set "VS_INSTALL=%%i"
-          call "%VS_INSTALL%\Common7\Tools\VsDevCmd.bat" -arch=x64
-          moon install justjavac/proton_cli
-          proton_cli --help
 
       - name: Build diagnostic
         if: runner.os == 'Windows'

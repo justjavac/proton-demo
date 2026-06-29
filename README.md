@@ -7,10 +7,8 @@
 ```bash
 moon update
 moon install justjavac/proton_cli
-proton_cli cef setup
-
 moon check --target native
-moon build app --target native
+proton_cli cef setup
 ```
 
 ## 运行本示例

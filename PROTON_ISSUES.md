@@ -4,7 +4,7 @@
 
 ## 当前阻塞
 
-在干净环境中，`moon build app --target native` 会因为缺少 Proton native 产物失败：
+在干净环境中，`moon build app --target native` 会因为缺少 `native/dist` 链接产物失败：
 
 ```text
 LINK : fatal error LNK1104: cannot open file '.mooncakes\justjavac\native\dist\lib\proton.lib'
@@ -12,7 +12,16 @@ ld: library 'proton' not found
 /usr/bin/ld: cannot find -lproton
 ```
 
-`proton_cli cef setup` 可以装配 `.proton/runtimes/...`，但它没有为 MoonBit native link 准备 `.mooncakes/justjavac/native/dist`，也不能消除上面的链接错误。
+CI 中可以看到 `.mooncakes/justjavac/proton/prebuilt/<rid>` 存在，但当前 native link 仍查找 `.mooncakes/justjavac/native/dist`。
+
+Linux/macOS 上，`proton_cli cef setup` 可以装配 `.proton/runtimes/...`，但它没有为 MoonBit native link 准备 `.mooncakes/justjavac/native/dist`，也不能消除上面的链接错误。
+
+Windows 上，`proton_cli cef setup` 仍会失败：
+
+```text
+Copy-Item : Cannot bind argument to parameter 'LiteralPath' because it is null.
+error: Failed to copy ...\.bazelrc ... Copy-Item exited with code 1
+```
 
 ## 已验证
 

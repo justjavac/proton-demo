@@ -118,6 +118,7 @@ let resource : String =
   #|            .panel {
   #|                padding: 16px;
   #|                display: grid;
+  #|                align-content: start;
   #|                gap: 14px;
   #|            }
   #|
@@ -145,7 +146,14 @@ let resource : String =
   #|            .row {
   #|                display: grid;
   #|                grid-template-columns: minmax(0, 1fr) auto;
+  #|                align-items: center;
+  #|                align-self: start;
   #|                gap: 8px;
+  #|            }
+  #|
+  #|            .row input,
+  #|            .row button {
+  #|                height: 40px;
   #|            }
   #|
   #|            input {

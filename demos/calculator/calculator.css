@@ -1,0 +1,171 @@
+:root {
+    color-scheme: light;
+    --bg: #f5f7f8;
+    --panel: #ffffff;
+    --panel-alt: #eef3f2;
+    --line: #d8e0e3;
+    --ink: #1f2933;
+    --muted: #63717a;
+    --accent: #087f7a;
+    --accent-ink: #ffffff;
+    --danger: #b42318;
+    --shadow: rgba(31, 41, 51, 0.1);
+}
+
+[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #101417;
+    --panel: #171d21;
+    --panel-alt: #1f292e;
+    --line: #344149;
+    --ink: #edf2f4;
+    --muted: #a7b4bb;
+    --accent: #2dd4bf;
+    --accent-ink: #071011;
+    --danger: #fb7185;
+    --shadow: rgba(0, 0, 0, 0.32);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--ink);
+    font-family:
+        Inter, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont,
+        sans-serif;
+    display: grid;
+    place-items: center;
+}
+
+button {
+    font: inherit;
+}
+
+.app {
+    width: min(380px, calc(100vw - 32px));
+    display: grid;
+    gap: 16px;
+}
+
+.topbar,
+.panel {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel);
+    box-shadow: 0 12px 28px var(--shadow);
+}
+
+.topbar {
+    min-height: 64px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+h1 {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.2;
+}
+
+.muted {
+    color: var(--muted);
+}
+
+.panel {
+    padding: 16px;
+    display: grid;
+    gap: 14px;
+}
+
+.display {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel-alt);
+    padding: 12px 14px;
+    text-align: right;
+    overflow: hidden;
+}
+
+.expr {
+    min-height: 20px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.entry {
+    min-height: 44px;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.keys {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.keys button {
+    min-height: 56px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel-alt);
+    color: var(--ink);
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.keys button:active {
+    transform: translateY(1px);
+}
+
+.keys button.zero {
+    grid-column: span 2;
+}
+
+.keys button.op {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: transparent;
+}
+
+.keys button.op.active {
+    outline: 2px solid var(--ink);
+    outline-offset: -2px;
+}
+
+.keys button.equals {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: transparent;
+}
+
+.keys button.secondary {
+    background: var(--panel-alt);
+    color: var(--ink);
+}
+
+.keys button.danger {
+    background: transparent;
+    color: var(--danger);
+}
+
+button.secondary {
+    min-height: 36px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 0 14px;
+    background: var(--panel-alt);
+    color: var(--ink);
+    cursor: pointer;
+    font-weight: 600;
+}

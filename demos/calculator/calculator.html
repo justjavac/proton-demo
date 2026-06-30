@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="calculator.css" />
+    </head>
+    <body>
+        <main class="app">
+            <header class="topbar">
+                <h1>Calculator</h1>
+                <button id="theme" class="secondary">Theme</button>
+            </header>
+
+            <section class="panel">
+                <div class="display">
+                    <div class="expr muted" id="expr">&nbsp;</div>
+                    <div class="entry" id="entry">0</div>
+                </div>
+
+                <div class="keys">
+                    <button class="danger" data-action="clear">C</button>
+                    <button class="secondary" data-action="negate">±</button>
+                    <button class="secondary" data-action="percent">%</button>
+                    <button class="op" data-op="/">÷</button>
+
+                    <button data-digit="7">7</button>
+                    <button data-digit="8">8</button>
+                    <button data-digit="9">9</button>
+                    <button class="op" data-op="*">×</button>
+
+                    <button data-digit="4">4</button>
+                    <button data-digit="5">5</button>
+                    <button data-digit="6">6</button>
+                    <button class="op" data-op="-">−</button>
+
+                    <button data-digit="1">1</button>
+                    <button data-digit="2">2</button>
+                    <button data-digit="3">3</button>
+                    <button class="op" data-op="+">+</button>
+
+                    <button class="zero" data-digit="0">0</button>
+                    <button data-action="decimal">.</button>
+                    <button class="equals" data-action="equals">=</button>
+                </div>
+            </section>
+        </main>
+        <script src="calculator.js"></script>
+    </body>
+</html>

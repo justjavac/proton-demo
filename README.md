@@ -43,11 +43,9 @@ moon add justjavac/proton
 mkdir app
 ```
 
-在 `moon.mod` 中添加 embed 规则，并使用 native target：
+在 `moon.mod` 中使用 native target：
 
 ```moonbit
-rule(name: "embed", command: ":embed -i $input -o $output")
-
 options(
   preferred_target: "native",
   supported_targets: "+native",
@@ -64,10 +62,7 @@ import {
 
 supported_targets = "native"
 
-dev_build(rule: "embed", input: "app.html", output: "app.mbt")
-
 options(
-  formatter: { "ignore": [ "app.mbt" ] },
   "is-main": true,
   targets: { "main.mbt": [ "native" ] },
 )
@@ -78,9 +73,9 @@ options(
 ```moonbit
 ///|
 async fn main {
-  let app = @proton.html(
+  let app = @proton.asset(
     "Proton Starter",
-    resource,
+    "app/app.html",
     width=960,
     height=640,
     debug=true,
@@ -89,7 +84,7 @@ async fn main {
 }
 ```
 
-创建 `app/app.html`，写普通 HTML、CSS 和 JavaScript。构建时会生成 `app/app.mbt`：
+创建 `app/app.html`、`app/app.css` 和 `app/app.js`，HTML 中用相对路径引用 CSS 和 JS。
 
 ## License
 

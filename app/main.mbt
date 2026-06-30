@@ -1,11 +1,11 @@
 ///|
 async fn main {
-  let app = @proton.html(
+  let app = @proton.asset(
     "Proton Starter",
-    resource,
+    "app/app.html",
     width=960,
     height=640,
     debug=true,
-  ).extension(@async_add.extension())
+  )
   app.run_or_abort()
 }

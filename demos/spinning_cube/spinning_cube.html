@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="spinning_cube.css" />
+    </head>
+    <body>
+        <main class="app">
+            <header class="topbar">
+                <div>
+                    <h1>Spinning Cube</h1>
+                    <p class="muted">Drag the cube or let it spin</p>
+                </div>
+                <div class="toolbar">
+                    <button id="pause" class="secondary">Pause</button>
+                    <button id="reset" class="danger">Reset</button>
+                    <button id="theme" class="secondary">Theme</button>
+                </div>
+            </header>
+
+            <section class="panel stage-panel">
+                <div class="stage" id="stage">
+                    <div class="cube" id="cube">
+                        <div class="face front">1</div>
+                        <div class="face back">2</div>
+                        <div class="face right">3</div>
+                        <div class="face left">4</div>
+                        <div class="face top">5</div>
+                        <div class="face bottom">6</div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <label class="slider">
+                        <span class="muted">Speed</span>
+                        <input
+                            id="speed"
+                            type="range"
+                            min="0"
+                            max="120"
+                            value="45"
+                        />
+                        <strong id="speedValue">45°/s</strong>
+                    </label>
+                    <div class="axes" id="axes">
+                        <button class="chip" data-axis="x">X</button>
+                        <button class="chip active" data-axis="y">Y</button>
+                        <button class="chip" data-axis="z">Z</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <script src="spinning_cube.js"></script>
+    </body>
+</html>

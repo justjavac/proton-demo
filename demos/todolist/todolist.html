@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="todolist.css" />
+    </head>
+    <body>
+        <main class="app">
+            <header class="topbar">
+                <div>
+                    <h1>Todo List</h1>
+                    <p class="muted" id="summary">0 open · 0 done</p>
+                </div>
+                <div class="toolbar">
+                    <button id="clearDone" class="danger">Clear done</button>
+                    <button id="theme" class="secondary">Theme</button>
+                </div>
+            </header>
+
+            <section class="panel">
+                <form class="row" id="todoForm">
+                    <input
+                        id="todoInput"
+                        placeholder="What needs to be done?"
+                        autocomplete="off"
+                    />
+                    <button>Add</button>
+                </form>
+
+                <div class="filters" id="filters">
+                    <button class="chip active" data-filter="all">All</button>
+                    <button class="chip" data-filter="active">Active</button>
+                    <button class="chip" data-filter="done">Done</button>
+                </div>
+
+                <div id="todos" class="todos"></div>
+            </section>
+        </main>
+        <script src="todolist.js"></script>
+    </body>
+</html>

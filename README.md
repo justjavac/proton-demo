@@ -1,4 +1,4 @@
-﻿# Proton Starter
+# Proton Starter
 
 一个最小 Proton 桌面应用示例。
 
@@ -29,6 +29,22 @@ macOS / Linux：
 runtime_bin="$(find .proton/runtimes -type d -name bin -print -quit)"
 export PATH="$(pwd)/$runtime_bin:$PATH"
 moon run app --target native
+```
+
+## Demos
+
+`demos/` 目录下有三个独立示例，均为纯前端 UI 加 Proton 原生窗口：
+
+- `demos/todolist` — 待办事项：增删、勾选完成、按状态过滤、清除已完成。
+- `demos/calculator` — 计算器：四则运算、百分比、取负，支持键盘输入。
+- `demos/spinning_cube` — 3D 旋转方块：自动旋转、拖拽转动、速度与轴向调节。
+
+运行方式与主示例相同，把包名换成对应 demo，例如：
+
+```sh
+moon run demos/todolist --target native
+moon run demos/calculator --target native
+moon run demos/spinning_cube --target native
 ```
 
 ## 从零创建

@@ -1,0 +1,22 @@
+product_name = "Proton Starter"
+identifier = "com.example.proton-starter"
+
+window = {
+  title: "Proton Starter",
+  width: 960,
+  height: 640,
+  size_hint: "none",
+}
+
+entry = {
+  kind: "asset",
+  value: "app/app.html",
+}
+
+debug = true
+
+bundle = {
+  active: true,
+  targets: ["app", "zip"],
+  output: "target/proton-dist",
+}

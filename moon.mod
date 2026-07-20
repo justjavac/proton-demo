@@ -3,24 +3,21 @@ name = "justjavac/proton_demo"
 version = "0.1.0"
 
 import {
-  "moonbitlang/async@0.20.2",
+  "moonbitlang/async@0.19.4",
   "justjavac/proton@0.1.10",
 }
 
-readme = "README.md"
+readme = "README.mbt.md"
 
 repository = ""
 
 license = "MIT"
 
-keywords = [ "webview", "webui", "gui", "web", "desktop-app" ]
+keywords = [ "proton", "gui", "web", "desktop-app" ]
 
-description = "Standalone Proton starter app demo."
-
-rule(name: "proton_codegen", command: "proton_cli codegen $input -o $output")
+description = "A Proton desktop app."
 
 options(
-  source: "",
   warn_list: "",
   preferred_target: "native",
   supported_targets: "+native",

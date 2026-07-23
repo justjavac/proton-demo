@@ -1,12 +1,50 @@
+const STORAGE_KEY = "proton-todolist";
+
+const defaultTodos = [
+    { id: 1, title: "Try the Proton todo demo", done: true },
+    { id: 2, title: "Add a new task below", done: false },
+    { id: 3, title: "Toggle a task done", done: false },
+];
+
+function loadTodos() {
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+            return { todos: defaultTodos, nextId: 4 };
+        }
+        const saved = JSON.parse(raw);
+        if (!Array.isArray(saved.todos)) {
+            return { todos: defaultTodos, nextId: 4 };
+        }
+        const todos = saved.todos.filter(
+            (todo) =>
+                typeof todo.id === "number" && typeof todo.title === "string",
+        );
+        const maxId = todos.reduce((max, todo) => Math.max(max, todo.id), 0);
+        return { todos, nextId: Math.max(saved.nextId || 1, maxId + 1) };
+    } catch {
+        return { todos: defaultTodos, nextId: 4 };
+    }
+}
+
+function saveTodos() {
+    try {
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify({ todos: state.todos, nextId: state.nextId }),
+        );
+    } catch {
+        // localStorage unavailable (e.g. opaque origin); keep in-memory only.
+    }
+}
+
+const savedState = loadTodos();
+
 const state = {
-    nextId: 4,
+    nextId: savedState.nextId,
     filter: "all",
     theme: "light",
-    todos: [
-        { id: 1, title: "Try the Proton todo demo", done: true },
-        { id: 2, title: "Add a new task below", done: false },
-        { id: 3, title: "Toggle a task done", done: false },
-    ],
+    todos: savedState.todos,
 };
 
 const elements = {
@@ -87,6 +125,7 @@ function render() {
     renderSummary();
     renderFilters();
     renderTodos();
+    saveTodos();
 }
 
 document.getElementById("todoForm").addEventListener("submit", (event) => {

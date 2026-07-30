@@ -1,0 +1,8 @@
+import {
+  "justjavac/proton",
+  "justjavac/proton_demo_backend/todo",
+}
+
+supported_targets = "native"
+
+pkgtype(kind: "executable")

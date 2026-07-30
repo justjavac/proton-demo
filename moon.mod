@@ -5,6 +5,7 @@ version = "0.1.0"
 import {
   "moonbitlang/async@0.19.0",
   "justjavac/proton@0.1.13",
+  "justjavac/proton_contract@0.1.0",
 }
 
 readme = "README.md"
@@ -18,6 +19,8 @@ keywords = [ "webview", "webui", "gui", "web", "desktop-app" ]
 description = "Standalone Proton starter app demo."
 
 rule(name: "proton_codegen", command: "proton_cli codegen $input -o $output")
+
+rule(name: "proton_extension_identity_codegen", command: "proton_cli codegen --extension-identity $input -o $output")
 
 options(
   source: "",

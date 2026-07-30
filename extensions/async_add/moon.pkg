@@ -1,8 +1,9 @@
 import {
   "moonbitlang/core/json",
   "moonbitlang/async",
-  "justjavac/proton/command" @proton_command,
+  "justjavac/proton",
   "justjavac/proton/extension" @proton_extension,
+  "justjavac/proton_contract",
 }
 
 supported_targets = "native"
@@ -13,7 +14,18 @@ dev_build(
   output: "commands.g.mbt",
 )
 
+dev_build(
+  rule: "proton_extension_identity_codegen",
+  input: "moon.ext",
+  output: "extension_identity.g.mbt",
+)
+
+formatter(ignore: [ "commands.g.mbt", "extension_identity.g.mbt" ])
+
 options(
-  formatter: { "ignore": [ "commands.g.mbt" ] },
-  targets: { "commands.g.mbt": [ "native" ], "commands.mbt": [ "native" ] },
+  targets: {
+    "commands.g.mbt": [ "native" ],
+    "commands.mbt": [ "native" ],
+    "extension_identity.g.mbt": [ "native" ],
+  },
 )

@@ -4,7 +4,7 @@ version = "0.1.0"
 
 import {
   "moonbitlang/async@0.19.0",
-  "justjavac/proton@0.1.12",
+  "justjavac/proton@0.1.13",
 }
 
 readme = "README.md"

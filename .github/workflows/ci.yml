@@ -63,7 +63,7 @@ jobs:
 
       - name: Check
         shell: pwsh
-        run: moon check --target native
+        run: moon check --target js,native --diagnostic-limit 80
 
       - name: Inspect Proton native artifacts
         shell: pwsh
@@ -90,7 +90,7 @@ jobs:
         if: runner.os != 'Windows'
         continue-on-error: true
         shell: pwsh
-        run: moon build app --target native
+        run: moon build backend/app --target native
 
       - name: Build diagnostic
         if: runner.os == 'Windows'
@@ -99,7 +99,7 @@ jobs:
         run: |
           for /f "usebackq tokens=*" %%i in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath`) do set "VS_INSTALL=%%i"
           call "%VS_INSTALL%\Common7\Tools\VsDevCmd.bat" -arch=x64
-          moon build app --target native
+          moon build backend/app --target native
 
       - name: CEF setup diagnostic
         continue-on-error: true

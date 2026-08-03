@@ -1,0 +1,6 @@
+members = [
+  "./shared",
+  "./frontend",
+  "./backend",
+  "./demos",
+]

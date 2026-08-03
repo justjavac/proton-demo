@@ -10,7 +10,7 @@ jobs:
   check:
     name: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 15
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
@@ -45,64 +45,41 @@ jobs:
         shell: pwsh
         run: moon update
 
-      - name: Install Proton CLI
+      - name: Install Proton CLI and warren
         if: runner.os != 'Windows'
         shell: pwsh
         run: |
           moon install justjavac/proton_cli
-          proton_cli --help
+          moon install moonbit-community/warren
+          proton_cli version
 
-      - name: Install Proton CLI
+      - name: Install Proton CLI and warren
         if: runner.os == 'Windows'
         shell: cmd
         run: |
           for /f "usebackq tokens=*" %%i in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath`) do set "VS_INSTALL=%%i"
           call "%VS_INSTALL%\Common7\Tools\VsDevCmd.bat" -arch=x64
           moon install justjavac/proton_cli
-          proton_cli --help
+          moon install moonbit-community/warren
+          proton_cli version
 
       - name: Check
         shell: pwsh
         run: moon check --target js,native --diagnostic-limit 80
 
-      - name: Inspect Proton native artifacts
+      - name: CEF setup
         shell: pwsh
-        run: |
-          $rid = switch ($env:RUNNER_OS) {
-            'Windows' { 'win32-x64' }
-            'macOS' { 'darwin-arm64' }
-            default { 'linux-x64' }
-          }
-          $paths = @(
-            ".mooncakes/justjavac/proton/prebuilt/$rid",
-            ".mooncakes/justjavac/native/dist"
-          )
-          foreach ($path in $paths) {
-            if (Test-Path $path) {
-              Write-Host "found: $path"
-              Get-ChildItem -Recurse $path | Select-Object -First 40 FullName, Length
-            } else {
-              Write-Host "missing: $path"
-            }
-          }
+        run: proton_cli cef setup
 
-      - name: Build diagnostic
+      - name: Build
         if: runner.os != 'Windows'
-        continue-on-error: true
         shell: pwsh
-        run: moon build backend/app --target native
+        run: proton_cli build
 
-      - name: Build diagnostic
+      - name: Build
         if: runner.os == 'Windows'
-        continue-on-error: true
         shell: cmd
         run: |
           for /f "usebackq tokens=*" %%i in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath`) do set "VS_INSTALL=%%i"
           call "%VS_INSTALL%\Common7\Tools\VsDevCmd.bat" -arch=x64
-          moon build backend/app --target native
-
-      - name: CEF setup diagnostic
-        continue-on-error: true
-        shell: pwsh
-        run: |
-          proton_cli cef setup
+          proton_cli build

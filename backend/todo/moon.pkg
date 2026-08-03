@@ -8,7 +8,7 @@ supported_targets = "native"
 
 rule(
   name: "proton_codegen",
-  command: "$mooncake_bin/proton_cli codegen $input -o $output",
+  command: "proton_cli codegen $input -o $output",
 )
 
 dev_build(

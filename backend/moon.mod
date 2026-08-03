@@ -13,7 +13,6 @@ license = "MIT"
 description = "Proton backend for Proton Starter."
 
 options(
-  "bin-deps": { "justjavac/proton_cli": "0.1.11" },
   warn_list: "",
   preferred_target: "native",
   supported_targets: "+native",

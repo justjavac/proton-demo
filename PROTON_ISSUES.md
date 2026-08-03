@@ -19,7 +19,7 @@
 ### Windows 构建诊断
 
 - `moon build backend/app --target native` 现在停在 proton 的 prebuild 脚本：需要 PATH 里有 `node`（`native_link_config.mjs`）。干净环境下是否仍有 `.mooncakes/justjavac/native/dist` 链接产物问题，待装好 node 后复测。
-- workspace 布局引入的 `bin-deps` 版 proton_cli（backend/moon.mod）在 Windows 本机可以编译，但 moon 执行产物时报 `系统找不到指定的文件 (os error 2)`，导致 `moon check --target native` 在 backend/todo 的 codegen 规则处失败。该问题在合并前的 origin/main 上同样复现，与 demos 合并无关；js target 正常，`demos/` 模块单独检查通过。
+- workspace 布局引入的 `bin-deps` 版 proton_cli（backend/moon.mod）在 Windows 上导致 `moon check --target native` 失败：moon 把 bin-dep 编译成 `_build/__moonbin__/.artifacts/proton_cli/proton_cli.exe`， shim 只生成 `__moonbin__/proton_cli.ps1`，但规则命令按 `$mooncake_bin/proton_cli` 原样执行，没有这个文件 → `The system cannot find the file specified (os error 2)`。Unix 上 shim 是无扩展名可执行脚本所以正常。这是 moon（0.1.20260724）Windows bin-deps 的缺陷。已改为使用全局安装的 proton_cli（规则命令 `proton_cli codegen ...`，CI 本就先装 CLI），改后 Windows 本地 `moon check --target js,native` 全量通过。
 - `proton_cli cef setup` 在 proton_cli 0.1.11 上不再报 `Copy-Item` 空参数错误，会正常开始下载 CEF；但 CEF 压缩包约 151 MB，托管在 spotifycdn，受限网络下可能中断（curl 56），重试即可。
 
 ## 历史阻塞（已过时，保留存档）
